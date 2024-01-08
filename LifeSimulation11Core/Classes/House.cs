@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LifeSimulation11
 {
-    class House : Bilding
+    class House : Cell
     {
         public int foodSupply = 0;
         private int maxFoodSupply = 10;
