@@ -91,47 +91,9 @@ namespace LifeSimulation11
                 Death();
             }
 
-            if (satiety > thresholdValue)//Сыт
+            if (satiety > thresholdValue) //Сыт
             {
-                if (isAlone)//Если нет пары
-                {
-                    SearchLove<Human<HFood, PFood, FFood>>();
-                    DoRandomMove();
-                }
-                else//Если она есть
-                {
-                    CheckMyLove<Human<HFood, PFood, FFood>>();
-                    if (!isAlone && house != null)
-                    {
-                        if (house.foodSupply <= 2)
-                        {
-                            if (takenFoodForHouse)
-                            {
-                                if (Math.Abs(house.x - x) <= 3 && Math.Abs(house.y - y) <= 3)
-                                {
-                                    takenFoodForHouse = false;
-                                    house.IncrementFoodSupply();
-                                }
-                                else
-                                {
-                                    MoveToPositionByOneStep(house.x, house.y);
-                                }
-                            }
-                            else
-                            {
-                                SearchFoodForHouse();
-                            }
-                        }
-                        else
-                        {
-                            MoveToPositionByOneStep(house.x, house.y);
-                        }
-                    }
-                    else
-                    {
-                        DoRandomMove();
-                    }
-                }
+                WellFedBehaviour();
             }
             else//Голоден
             {
@@ -140,6 +102,48 @@ namespace LifeSimulation11
 
             satiety--;
             timeAfterKids--;
+        }
+
+        private void WellFedBehaviour()
+        {
+            if (isAlone)//Если нет пары
+            {
+                SearchLove<Human<HFood, PFood, FFood>>();
+                DoRandomMove();
+                return;
+            }
+
+            CheckMyLove<Human<HFood, PFood, FFood>>();
+            if (!isAlone && house != null)
+            {
+                if (house.foodSupply <= 2)
+                {
+                    if (takenFoodForHouse)
+                    {
+                        if (Math.Abs(house.x - x) <= 3 && Math.Abs(house.y - y) <= 3)
+                        {
+                            takenFoodForHouse = false;
+                            house.IncrementFoodSupply();
+                        }
+                        else
+                        {
+                            MoveToPositionByOneStep(house.x, house.y);
+                        }
+                    }
+                    else
+                    {
+                        SearchFoodForHouse();
+                    }
+                }
+                else
+                {
+                    MoveToPositionByOneStep(house.x, house.y);
+                }
+            }
+            else
+            {
+                DoRandomMove();
+            }
         }
 
         private void DoRandomMove()
