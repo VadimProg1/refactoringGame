@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LifeSimulation11
 {
-    public abstract class Creature : Cell
+    public abstract class Creature : MoveableEntity
     {
         public int maxSatiety = 200;
         public int satiety = 200;
@@ -16,19 +16,16 @@ namespace LifeSimulation11
         public int thresholdValue = 150;
         public int foodBonus = 60;
         public bool gender;
-        public static object[,] map;
         public static List<Cell> objectsList;
         public bool isAlone = true;
         public Creature love;
         public static Random random;
 
-        public Creature(int x, int y, bool gender, Random randomm, List<Cell> objectsListt,
-            object[,] mapp) : base(x, y)
+        public Creature(int x, int y, bool gender, Random randomm, List<Cell> objectsListt, object[,] mapp) : base(x, y, mapp)
         {
             this.gender = gender;
             random = randomm;
             objectsList = objectsListt;
-            map = mapp;
             maxSatiety = satiety;
         }
 
@@ -91,7 +88,7 @@ namespace LifeSimulation11
                 }
             }
 
-            MoveTo(nearestFoodX, nearestFoodY);
+            MoveToPositionByOneStep(nearestFoodX, nearestFoodY);
         }
 
         public void SearchForFood<TFood, UFood>()
@@ -127,7 +124,7 @@ namespace LifeSimulation11
                     }
                 }
             }
-            MoveTo(nearestFoodX, nearestFoodY);
+            MoveToPositionByOneStep(nearestFoodX, nearestFoodY);
         }
 
         public void SearchForFood<TFood>()
@@ -156,7 +153,7 @@ namespace LifeSimulation11
                     }             
                 }
             }
-            MoveTo(nearestFoodX, nearestFoodY);
+            MoveToPositionByOneStep(nearestFoodX, nearestFoodY);
         }
 
         void EatFood<TFood>(int index)
@@ -180,23 +177,23 @@ namespace LifeSimulation11
             }
         }
 
-        public void MoveTo(int nearestX, int nearestY)
+        public void MoveToPositionByOneStep(int nearestX, int nearestY)
         {
             if (nearestX < x)
             {
-                MoveLeft();
+                MoveByShift(-1, 0);
             }
             if (nearestX > x)
             {
-                MoveRight();
+                MoveByShift(1, 0);
             }
             if (nearestY < y)
             {
-                MoveUp();
+                MoveByShift(0, -1);
             }
             if (nearestY > y)
             {
-                MoveDown();
+                MoveByShift(0, 1);
             }
         }
 
@@ -204,120 +201,24 @@ namespace LifeSimulation11
         {
             if(randDirection == 0)
             {
-                MoveRight();
+                MoveByShift(1, 0);
             }
             else if (randDirection == 1)
             {
-                MoveLeft();
+                MoveByShift(-1, 0);
             }
             else if(randDirection == 2)
             {
-                MoveDown();
+                MoveByShift(0, -1);
             }
             else if(randDirection == 3)
             {
-                MoveUp();
+                MoveByShift(0, 1);
             }
         }
-
-        public void MoveLeft()
+        public override void MoveTowardsFoodBehaviour(Food food)
         {
-            if (x - 1 > 0)
-            {                              
-                if (map[x - 1, y] is Creature)
-                {
-
-                }
-                else if(map[x - 1, y] is Food)
-                {
-                    Food food = (Food)map[x - 1, y];
-                    food.Death();
-                }
-                else if (map[x - 1, y] is Cell)
-                {
-                    map[x - 1, y] = map[x, y];
-                    map[x, y] = new Cell(
-                        x: x,
-                        y: y
-                        );
-                    x--;
-                }
-            }
-        }
-
-        public void MoveRight()
-        {
-            if (x + 1 < 1000)
-            {              
-                if (map[x + 1, y] is Creature)
-                {
-
-                }
-                else if (map[x + 1, y] is Food)
-                {
-                    Food food = (Food)map[x + 1, y];
-                    food.Death();
-                }
-                else if (map[x + 1, y] is Cell)
-                {
-                    map[x + 1, y] = map[x, y];
-                    map[x, y] = new Cell(
-                        x: x,
-                        y: y
-                        );
-                    x++;
-                }
-            }
-        }
-
-        public void MoveUp()
-        {
-            if (y - 1 > 0)
-            {              
-                if (map[x, y - 1] is Creature)
-                {
-
-                }
-                else if (map[x, y - 1] is Food)
-                {
-                    Food food = (Food)map[x, y - 1];
-                    food.Death();
-                }
-                else if (map[x, y - 1] is Cell)
-                {
-                    map[x, y - 1] = map[x, y];
-                    map[x, y] = new Cell(
-                        x: x,
-                        y: y
-                        );
-                    y--;
-                }
-            }
-        }
-
-        public void MoveDown()
-        {
-            if (y + 1 < 1000)
-            {            
-                if (map[x, y + 1] is Creature)
-                {
-
-                }
-                else if (map[x, y + 1] is Food)
-                {
-                    Food food = (Food)map[x, y + 1];
-                    food.Death();
-                }
-                else if (map[x, y + 1] is Cell)
-                {
-                    map[x, y + 1] = map[x, y];
-                    map[x, y] = new Cell(
-                        x: x,
-                        y: y
-                        );
-                    y++;
-                }
-            }
+            food.Death();
         }
 
         public void SearchLove<TTarget>()

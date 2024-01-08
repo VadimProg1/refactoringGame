@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LifeSimulation11
 {
-    public class Nuke : Cell
+    public class Nuke : MoveableEntity
     {
         public static Random random;
         public static object[,] map;
@@ -19,11 +19,10 @@ namespace LifeSimulation11
         public string state = "none";
         int explosionTime = 50;
         int speed = 6;
-        public Nuke(int x, int y, Random randomm, object[,] mapp, List<Cell> objectsListt) : base(x, y)
+        public Nuke(int x, int y, Random randomm, List<Cell> objectsListt, object[,] mapp) : base(x, y, mapp)
         {
             random = randomm;
             objectsList = objectsListt;
-            map = mapp;
         }
 
         public void Activate()
@@ -146,100 +145,21 @@ namespace LifeSimulation11
         {
             if (dirX < x)
             {
-                MoveLeft();
+                MoveByShift(-speed, 0);
             }
             if (dirX > x)
             {
-                MoveRight();
+                MoveByShift(speed, 0);
             }
             if (dirY < y)
             {
-                MoveUp();
+                MoveByShift(0, -speed);
             }
             if (dirY > y)
             {
-                MoveDown();
+                MoveByShift(0, speed);
             }
         }
 
-        public void MoveLeft()
-        {
-            if (x - speed > 0)
-            {
-                if (map[x - speed, y] is Creature)
-                {
-
-                }
-                else if (map[x - speed, y] is Cell)
-                {
-                    map[x - speed, y] = map[x, y];
-                    map[x, y] = new Cell(
-                        x: x,
-                        y: y
-                        );
-                    x -= speed;
-                }
-            }
-        }
-
-        public void MoveRight()
-        {
-            if (x + speed < 1000)
-            {
-                if (map[x + speed, y] is Creature)
-                {
-
-                }
-                else if (map[x + speed, y] is Cell)
-                {
-                    map[x + speed, y] = map[x, y];
-                    map[x, y] = new Cell(
-                        x: x,
-                        y: y
-                        );
-                    x += speed;
-                }
-            }
-        }
-
-        public void MoveUp()
-        {
-            if (y - speed > 0)
-            {
-                if (map[x, y - speed] is Creature)
-                {
-
-                }
-                else if (map[x, y - speed] is Cell)
-                {
-                    map[x, y - speed] = map[x, y];
-                    map[x, y] = new Cell(
-                        x: x,
-                        y: y
-                        );
-                    y -= speed;
-                }
-            }
-        }
-
-        public void MoveDown()
-        {
-            if (y + speed < 1000)
-            {
-                if (map[x, y + speed] is Creature)
-                {
-
-                }
-                else if (map[x, y + speed] is Cell)
-                {
-                    map[x, y + speed] = map[x, y];
-                    map[x, y] = new Cell(
-                        x: x,
-                        y: y
-                        );
-                    y += speed;
-                }
-            }
-        }
     }
 }

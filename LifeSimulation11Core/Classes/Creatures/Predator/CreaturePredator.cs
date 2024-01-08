@@ -55,7 +55,7 @@ namespace LifeSimulation11
                 }
                 else if (satiety > thresholdValue && !isAlone)
                 {
-                    MoveTo(love.x, love.y);
+                    MoveToPositionByOneStep(love.x, love.y);
                 }
                 else
                 {

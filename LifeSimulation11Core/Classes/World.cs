@@ -244,8 +244,8 @@ namespace LifeSimulation11
         void SpawnNuke()
         {
             nuke = new Nuke(
-                        x: 0,
-                        y: 0,
+                        x: 1,
+                        y: 1,
                         randomm: random,
                         objectsListt: objectsList,
                         mapp: map

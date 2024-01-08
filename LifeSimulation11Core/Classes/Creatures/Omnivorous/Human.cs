@@ -66,7 +66,7 @@ namespace LifeSimulation11
                         }
                         else if(house != null)
                         {
-                            MoveTo(house.x, house.y);
+                            MoveToPositionByOneStep(house.x, house.y);
                         }
                     }
                     else
@@ -116,7 +116,7 @@ namespace LifeSimulation11
                                     }
                                     else
                                     {
-                                        MoveTo(house.x, house.y);
+                                        MoveToPositionByOneStep(house.x, house.y);
                                     }
                                 }
                                 else
@@ -126,7 +126,7 @@ namespace LifeSimulation11
                             }
                             else
                             {
-                                MoveTo(house.x, house.y);
+                                MoveToPositionByOneStep(house.x, house.y);
                             }
                         }
                         else
@@ -203,7 +203,7 @@ namespace LifeSimulation11
                     }
                 }
             }
-            MoveTo(nearestFoodX, nearestFoodY);
+            MoveToPositionByOneStep(nearestFoodX, nearestFoodY);
         }
         public override void CheckMyLove<TLove>()
         {
@@ -378,7 +378,7 @@ namespace LifeSimulation11
             }
             else
             {
-                MoveTo(futureHouseX, futureHouseY);
+                MoveToPositionByOneStep(futureHouseX, futureHouseY);
             }         
         }
 
