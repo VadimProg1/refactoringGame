@@ -101,37 +101,30 @@ namespace LifeSimulation11
                 else//Если она есть
                 {
                     CheckMyLove<Human<HFood, PFood, FFood>>();
-                    if (!isAlone)
+                    if (!isAlone && house != null)
                     {
-                        if (house != null)
+                        if (house.foodSupply <= 2)
                         {
-                            if (house.foodSupply <= 2)
+                            if (takenFoodForHouse)
                             {
-                                if (takenFoodForHouse)
+                                if (Math.Abs(house.x - x) <= 3 && Math.Abs(house.y - y) <= 3)
                                 {
-                                    if(Math.Abs(house.x - x) <= 3 && Math.Abs(house.y - y) <= 3)
-                                    {
-                                        takenFoodForHouse = false;
-                                        house.IncrementFoodSupply();
-                                    }
-                                    else
-                                    {
-                                        MoveToPositionByOneStep(house.x, house.y);
-                                    }
+                                    takenFoodForHouse = false;
+                                    house.IncrementFoodSupply();
                                 }
                                 else
                                 {
-                                    SearchFoodForHouse();
+                                    MoveToPositionByOneStep(house.x, house.y);
                                 }
                             }
                             else
                             {
-                                MoveToPositionByOneStep(house.x, house.y);
+                                SearchFoodForHouse();
                             }
                         }
                         else
                         {
-                            DoRandomMove();
+                            MoveToPositionByOneStep(house.x, house.y);
                         }
                     }
                     else
