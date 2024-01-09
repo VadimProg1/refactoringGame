@@ -172,7 +172,9 @@ namespace LifeSimulation11
                                  );
 
                 case 5:
-                    return new Human<ISmallAnimal, IBigAnimal, Food>(
+                    if (gender == false)
+                    {
+                        return new HumanFemale<ISmallAnimal, IBigAnimal, Food>(
                                   x: randX,
                                   y: randY,
                                   gender: gender,
@@ -180,6 +182,18 @@ namespace LifeSimulation11
                                   objectsListt: objectsList,
                                   mapp: map
                                   );
+                    }
+                    else
+                    {
+                        return new HumanMale<ISmallAnimal, IBigAnimal, Food>(
+                                  x: randX,
+                                  y: randY,
+                                  gender: gender,
+                                  randomm: random,
+                                  objectsListt: objectsList,
+                                  mapp: map
+                                  );
+                    }
 
                 case 6:
                     return new Bear<ISmallAnimal, ICreatureOmnivorous, Food>(

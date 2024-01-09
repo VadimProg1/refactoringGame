@@ -1,52 +1,34 @@
-﻿using System;
+﻿using LifeSimulation11;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LifeSimulation11
 {
-    class Human<HFood, PFood, FFood> : CreatureOmnivorous<HFood, PFood, FFood>, ISmallAnimal
+    class HumanMale<HFood, PFood, FFood> : Human<HFood, PFood, FFood>
     {
-        public House house = null;
-        private int futureHouseX, futureHouseY;
-        private bool movingToFutureHouse = false;
-        private bool takenFoodForHouse = false;
-        private int minRadiusOfHousing = 5;
-        private int maxRadiusOfHousing = 30;
-        public Human(int x, int y, bool gender, Random randomm, List<Cell> objectsListt,
+        public int minRadiusOfHousing = 5;
+        public int maxRadiusOfHousing = 30;
+        public bool movingToFutureHouse = false;
+        public int futureHouseX, futureHouseY;
+        public HumanMale(int x, int y, bool gender, Random randomm, List<Cell> objectsListt,
              object[,] mapp) : base(x, y, gender, randomm, objectsListt, mapp)
         {
-            satiety = 300;
-            thresholdValue = 300;
-            foodBonus = 380;
-            timeAfterKids = 10;
-            AfterKidsCooldown = 6;
+            
         }
 
         public override void Activate()
-        {
-            if(gender == true)
-            {
-                ActivateMale();
-            }
-            else
-            {
-                ActivateFemale();
-            }
-        }
-
-        private void ActivateMale()
         {
             if (satiety <= 0)
             {
                 Death();
             }
-            
-            if(satiety > thresholdValue)//Сыт
+
+            if (satiety > thresholdValue)//Сыт
             {
-                if(isAlone)//Если нет пары
+                if (isAlone)//Если нет пары
                 {
                     SearchLove<Human<HFood, PFood, FFood>>();
                     DoRandomMove();
@@ -64,7 +46,7 @@ namespace LifeSimulation11
                         {
                             MoveToFutureHouseAndBuildWhenHeDidIt();
                         }
-                        else if(house != null)
+                        else if (house != null)
                         {
                             MoveToPositionByOneStep(house.x, house.y);
                         }
@@ -84,151 +66,16 @@ namespace LifeSimulation11
             timeAfterKids--;
         }
 
-        private void ActivateFemale()
+        private void MoveToFutureHouseAndBuildWhenHeDidIt()
         {
-            if (satiety <= 0)
+            if (Math.Abs(futureHouseX - x) <= 10 && Math.Abs(futureHouseY - y) <= 10)
             {
-                Death();
-            }
-
-            if (satiety > thresholdValue) //Сыт
-            {
-                WellFedBehaviour();
-            }
-            else//Голоден
-            {
-                HungryBehaviour();
-            }
-
-            satiety--;
-            timeAfterKids--;
-        }
-
-        private void WellFedBehaviour()
-        {
-            if (isAlone)//Если нет пары
-            {
-                SearchLove<Human<HFood, PFood, FFood>>();
-                DoRandomMove();
-                return;
-            }
-
-            CheckMyLove<Human<HFood, PFood, FFood>>();
-            if (!isAlone && house != null)
-            {
-                if (house.foodSupply <= 2)
-                {
-                    if (takenFoodForHouse)
-                    {
-                        if (Math.Abs(house.x - x) <= 3 && Math.Abs(house.y - y) <= 3)
-                        {
-                            takenFoodForHouse = false;
-                            house.IncrementFoodSupply();
-                        }
-                        else
-                        {
-                            MoveToPositionByOneStep(house.x, house.y);
-                        }
-                    }
-                    else
-                    {
-                        SearchFoodForHouse();
-                    }
-                }
-                else
-                {
-                    MoveToPositionByOneStep(house.x, house.y);
-                }
+                movingToFutureHouse = false;
+                BuildHouse();
             }
             else
             {
-                DoRandomMove();
-            }
-        }
-
-        private void DoRandomMove()
-        {
-            int randDirection = random.Next(4);
-            RandomMove(randDirection);
-        }
-
-        private void HungryBehaviour()
-        {
-            if (house == null)
-            {
-                SearchForFood<HFood, PFood, FFood>();
-            }
-            else
-            {
-                if (house.foodSupply > 0)
-                {
-                    satiety += foodBonus;
-                    house.foodSupply--;
-                }
-                else
-                {
-                    SearchForFood<HFood, PFood, FFood>();
-                }
-            }
-        }
-        public void SearchFoodForHouse()
-        {
-            int nearestFoodX = int.MaxValue;
-            int nearestFoodY = int.MaxValue;
-            int distToNearestX, distToNearestY, distToObjX, distToObjY;
-            foreach (Cell obj in objectsList)
-            {
-                if (obj is Food)
-                {
-                    if (GetType() != obj.GetType())
-                    {
-                        distToNearestX = Math.Abs(nearestFoodX - x);
-                        distToNearestY = Math.Abs(nearestFoodY - y);
-                        distToObjX = Math.Abs(obj.x - x);
-                        distToObjY = Math.Abs(obj.y - y);
-
-                        if(distToNearestX <= 2 && distToNearestY <= 2)
-                        {
-                            takenFoodForHouse = true;
-                            Food food = (Food)obj;
-                        }
-                        else if (distToObjX + distToObjY < distToNearestX + distToNearestY)
-                        {
-                            nearestFoodX = obj.x;
-                            nearestFoodY = obj.y;
-                        }
-                    }
-                }
-            }
-            MoveToPositionByOneStep(nearestFoodX, nearestFoodY);
-        }
-        public override void CheckMyLove<TLove>()
-        {
-            if(house == null)
-            {
-                Human<HFood, PFood, FFood> humanLove = (Human<HFood, PFood, FFood>)love;
-                if(humanLove.house != null)
-                {
-                    house = humanLove.house;
-                }
-            }
-            if (love.satiety <= 0)
-            {
-                love.isAlone = true;
-                love.love = null;
-                isAlone = true;
-                love = null;
-                SearchLove<TLove>();
-            }
-            else
-            {
-                if(timeAfterKids <= 0 && love.timeAfterKids <= 0)
-                {
-                    if(Math.Abs(love.x - x) <= 3 && Math.Abs(love.y - y) <= 3)
-                    {
-                        MakeBaby<Human<HFood, PFood, FFood>>();
-                    }
-                }
+                MoveToPositionByOneStep(futureHouseX, futureHouseY);
             }
         }
 
@@ -239,7 +86,7 @@ namespace LifeSimulation11
             int distToNearestX, distToNearestY, distToObjX, distToObjY;
             for (int i = 0; i < objectsList.Count(); i++)
             {
-                if(objectsList[i] is House)
+                if (objectsList[i] is House)
                 {
                     distToNearestX = Math.Abs(closestHouseX - x);
                     distToNearestY = Math.Abs(closestHouseY - y);
@@ -253,7 +100,8 @@ namespace LifeSimulation11
                 }
             }
 
-            if(closestHouseX == int.MaxValue && closestHouseY == int.MaxValue) {
+            if (closestHouseX == int.MaxValue && closestHouseY == int.MaxValue)
+            {
                 BuildHouse();
             }
             else if ((Math.Abs(closestHouseX - x) > maxRadiusOfHousing || Math.Abs(closestHouseY - y) > maxRadiusOfHousing))
@@ -270,27 +118,27 @@ namespace LifeSimulation11
         public void FindFutureHouseCoord()
         {
             List<House> housesList = new List<House>();
-            foreach(Cell obj in objectsList)
+            foreach (Cell obj in objectsList)
             {
-                if(obj is House)
+                if (obj is House)
                 {
                     housesList.Add((House)obj);
                 }
             }
             housesList.Sort(new HouseComparer(x: x, y: y));
-            foreach(House neighbour in housesList)
+            foreach (House neighbour in housesList)
             {
-                bool check = true, checkRight = true, checkLeft = true, checkUp = true, checkDown = true; 
+                bool check = true, checkRight = true, checkLeft = true, checkUp = true, checkDown = true;
                 int left = minRadiusOfHousing * -1, right = minRadiusOfHousing, up, down;
                 up = left;
                 down = right;
-                foreach(House neighbourOfNeighbour in housesList)
+                foreach (House neighbourOfNeighbour in housesList)
                 {
                     int distanceX = Math.Abs(neighbourOfNeighbour.x - neighbour.x);
                     int distanceY = Math.Abs(neighbourOfNeighbour.y - neighbour.y);
                     if (neighbourOfNeighbour.x != neighbour.x && neighbourOfNeighbour.y != neighbour.y)
                     {
-                        if(Math.Sqrt((distanceX + left) * (distanceX + left) + distanceY * distanceY) < minRadiusOfHousing)
+                        if (Math.Sqrt((distanceX + left) * (distanceX + left) + distanceY * distanceY) < minRadiusOfHousing)
                         {
                             checkLeft = false;
                         }
@@ -306,7 +154,7 @@ namespace LifeSimulation11
                         {
                             checkDown = false;
                         }
-                        if(!checkLeft && !checkRight && !checkUp && !checkDown)
+                        if (!checkLeft && !checkRight && !checkUp && !checkDown)
                         {
                             check = false;
                             break;
@@ -317,7 +165,7 @@ namespace LifeSimulation11
                 {
                     bool triedLeft = false, triedRight = false, triedUp = false, triedDown = false, quit = false;
                     int randMove;
-                    while((!triedDown || !triedUp || !triedLeft || !triedRight))
+                    while ((!triedDown || !triedUp || !triedLeft || !triedRight))
                     {
                         randMove = random.Next(4);
                         switch (randMove)
@@ -364,43 +212,16 @@ namespace LifeSimulation11
                 }
             }
         }
-
-        private void MoveToFutureHouseAndBuildWhenHeDidIt()
-        {
-            if(Math.Abs(futureHouseX - x) <= 10 && Math.Abs(futureHouseY - y) <= 10)
-            {
-                movingToFutureHouse = false;
-                BuildHouse();
-            }
-            else
-            {
-                MoveToPositionByOneStep(futureHouseX, futureHouseY);
-            }         
-        }
-
         public void BuildHouse()
         {
             House newHouse = new House(x: x, y: y, randomm: random);
             objectsList.Add(newHouse);
             house = newHouse;
         }
-        public override void SearchLoveFactory()
-        {
-            SearchLove<Human<HFood, PFood, FFood>>();
-        }
 
-        public override void CheckMyLoveFactory()
-        {
-            CheckMyLove<Human<HFood, PFood, FFood>>();
-        }
-
-        public override Brush GetCreatureColor()
-        {
-            return Brushes.Black;
-        }
         public override Creature FactoryMethod(bool babyGender, int razbrosX, int razbrosY)
         {
-            return new Human<HFood, PFood, FFood>(
+            return new HumanMale<HFood, PFood, FFood>(
                             x: x + razbrosX,
                             y: y + razbrosY,
                             gender: babyGender,
