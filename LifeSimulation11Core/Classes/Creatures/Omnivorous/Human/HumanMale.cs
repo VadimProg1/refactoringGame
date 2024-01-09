@@ -117,22 +117,15 @@ namespace LifeSimulation11
 
         public void FindFutureHouseCoord()
         {
-            List<House> housesList = new List<House>();
-            foreach (Cell obj in objectsList)
-            {
-                if (obj is House)
-                {
-                    housesList.Add((House)obj);
-                }
-            }
-            housesList.Sort(new HouseComparer(x: x, y: y));
-            foreach (House neighbour in housesList)
+            List<House> sortedHousesList = GetSortedListOfHouses();
+
+            foreach (House neighbour in sortedHousesList)
             {
                 bool checkRight = true, checkLeft = true, checkUp = true, checkDown = true;
                 int left = minRadiusOfHousing * -1, right = minRadiusOfHousing, up, down;
                 up = left;
                 down = right;
-                foreach (House neighbourOfNeighbour in housesList)
+                foreach (House neighbourOfNeighbour in sortedHousesList)
                 {
                     int distanceX = Math.Abs(neighbourOfNeighbour.x - neighbour.x);
                     int distanceY = Math.Abs(neighbourOfNeighbour.y - neighbour.y);
@@ -159,55 +152,76 @@ namespace LifeSimulation11
                             return;
                         }
                     }
-                }         
+                }
 
-                bool triedLeft = false, triedRight = false, triedUp = false, triedDown = false, quit = false;
-                int randMove;
-                while ((!triedDown || !triedUp || !triedLeft || !triedRight))
+                DeterminateFutureHouseCoordinatesWithRandomDirections(checkLeft, checkRight, checkDown, checkUp, right, left, up, down, neighbour);
+            }
+        }
+
+        private void DeterminateFutureHouseCoordinatesWithRandomDirections(bool checkLeft, bool checkRight, bool checkDown, bool checkUp, int right, int left, int up, int down, House neighbour)
+        {
+            bool triedLeft = false, triedRight = false, triedUp = false, triedDown = false, quit = false;
+            int randMove;
+            while ((!triedDown || !triedUp || !triedLeft || !triedRight))
+            {
+                randMove = random.Next(4);
+                switch (randMove)
                 {
-                    randMove = random.Next(4);
-                    switch (randMove)
-                    {
-                        case 0:
-                            triedLeft = true;
-                            if (checkLeft)
-                            {
-                                futureHouseX = neighbour.x + left;
-                                futureHouseY = neighbour.y;
-                                quit = true;
-                            }
-                            break;
-                        case 1:
-                            triedRight = true;
-                            if (checkRight)
-                            {
-                                futureHouseX = neighbour.x + right;
-                                futureHouseY = neighbour.y;
-                                quit = true;
-                            }
-                            break;
-                        case 2:
-                            triedDown = true;
-                            if (checkDown)
-                            {
-                                futureHouseX = neighbour.x;
-                                futureHouseY = neighbour.y + down;
-                                quit = true;
-                            }
-                            break;
-                        case 3:
-                            triedUp = true;
-                            if (checkUp)
-                            {
-                                futureHouseX = neighbour.x;
-                                futureHouseY = neighbour.y + up;
-                                quit = true;
-                            }
-                            break;
-                    }
+                    case 0:
+                        triedLeft = true;
+                        if (checkLeft)
+                        {
+                            futureHouseX = neighbour.x + left;
+                            futureHouseY = neighbour.y;
+                            quit = true;
+                        }
+                        break;
+                    case 1:
+                        triedRight = true;
+                        if (checkRight)
+                        {
+                            futureHouseX = neighbour.x + right;
+                            futureHouseY = neighbour.y;
+                            quit = true;
+                        }
+                        break;
+                    case 2:
+                        triedDown = true;
+                        if (checkDown)
+                        {
+                            futureHouseX = neighbour.x;
+                            futureHouseY = neighbour.y + down;
+                            quit = true;
+                        }
+                        break;
+                    case 3:
+                        triedUp = true;
+                        if (checkUp)
+                        {
+                            futureHouseX = neighbour.x;
+                            futureHouseY = neighbour.y + up;
+                            quit = true;
+                        }
+                        break;
                 }
             }
         }
+
+        private List<House> GetSortedListOfHouses()
+        {
+            List<House> housesList = new List<House>();
+            foreach (Cell obj in objectsList)
+            {
+                if (obj is House)
+                {
+                    housesList.Add((House)obj);
+                }
+            }
+            housesList.Sort(new HouseComparer(x: x, y: y));
+
+            return housesList;
+        }
+
         public void BuildHouse()
         {
             House newHouse = new House(x: x, y: y, randomm: random);
