@@ -56,11 +56,11 @@ namespace LifeSimulation11
                 else if (objects[i] is Nuke)
                 {
                     Nuke nuke = (Nuke)objects[i];
-                    if (nuke.state == "flying")
+                    if (nuke.state == Nuke.NukeStates.flying)
                     {
                         graphics.DrawImage(bombImage, objects[i].x * resolution, objects[i].y * resolution, 100, 100);
                     }
-                    else if (nuke.state == "explosion")
+                    else if (nuke.state == Nuke.NukeStates.explosion)
                     {
                         graphics.DrawImage(explosionImage, objects[i].x * resolution - 500, objects[i].y * resolution - 500, World.MAP_SIZE_X, World.MAP_SIZE_Y);
                     }

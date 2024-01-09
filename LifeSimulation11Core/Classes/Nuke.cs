@@ -14,7 +14,7 @@ namespace LifeSimulation11
         bool isChoosedDir = false;
         int dirX = World.MAP_SIZE_X;
         int dirY = World.MAP_SIZE_Y;
-        public string state = "none";
+        public NukeStates state = NukeStates.none;
         int explosionTime = 50;
         int speed = 6;
         public Nuke(int x, int y, Random randomm, List<Cell> objectsListt, object[,] mapp) : base(x, y, mapp)
@@ -30,7 +30,7 @@ namespace LifeSimulation11
                 isLaunched = true;
                 LaunchNuke();
             }
-            if(state == "explosion")
+            if(state == NukeStates.explosion)
             {
                 ExplosionTimer();
             }
@@ -48,7 +48,7 @@ namespace LifeSimulation11
             {
                 ChooseDir();
             }
-            if(state == "flying")
+            if(state == NukeStates.explosion)
             {
                 if (Math.Abs(dirX - x) < speed * 2 && Math.Abs(dirY - y) < speed * 2)
                 {
@@ -60,7 +60,7 @@ namespace LifeSimulation11
 
         private void Explosion()
         {
-            state = "explosion";
+            state = NukeStates.explosion;
             for(int i = 0; i < objectsList.Count(); i++)
             {
                 if(Math.Abs(objectsList[i].x - x) < 100 && Math.Abs(objectsList[i].y - y) < 100)
@@ -86,7 +86,7 @@ namespace LifeSimulation11
         {
             if(explosionTime <= 0)
             {
-                state = "none";
+                state = NukeStates.none;
                 isLaunched = false;
                 isChoosedDir = false;
                 explosionTime = 100;
@@ -125,14 +125,14 @@ namespace LifeSimulation11
                                     dirX = objectsList[i].x;
                                     dirY = objectsList[i].y;
                                     isChoosedDir = true;
-                                    state = "flying";
+                                    state = NukeStates.flying;
                                     break;
                                 }
                             }
                         }
                     }
                 }
-                if(state == "flying")
+                if(state == NukeStates.flying)
                 {
                     break;
                 }
@@ -157,6 +157,13 @@ namespace LifeSimulation11
             {
                 MoveByShift(0, speed);
             }
+        }
+
+        public enum NukeStates
+        {
+            none,
+            explosion,
+            flying,
         }
 
     }
