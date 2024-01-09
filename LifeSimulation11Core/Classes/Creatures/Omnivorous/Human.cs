@@ -173,8 +173,8 @@ namespace LifeSimulation11
         }
         public void SearchFoodForHouse()
         {
-            int nearestFoodX = 1000000;
-            int nearestFoodY = 1000000;
+            int nearestFoodX = int.MaxValue;
+            int nearestFoodY = int.MaxValue;
             int distToNearestX, distToNearestY, distToObjX, distToObjY;
             foreach (Cell obj in objectsList)
             {
@@ -234,9 +234,8 @@ namespace LifeSimulation11
 
         public void SearchPlaceForHouseAndBuild()
         {
-            const int infCoord = 10000000;
-            int closestHouseX = infCoord;
-            int closestHouseY = infCoord;
+            int closestHouseX = int.MaxValue;
+            int closestHouseY = int.MaxValue;
             int distToNearestX, distToNearestY, distToObjX, distToObjY;
             for (int i = 0; i < objectsList.Count(); i++)
             {
@@ -254,7 +253,7 @@ namespace LifeSimulation11
                 }
             }
 
-            if(closestHouseX == infCoord && closestHouseY == infCoord) {
+            if(closestHouseX == int.MaxValue && closestHouseY == int.MaxValue) {
                 BuildHouse();
             }
             else if ((Math.Abs(closestHouseX - x) > maxRadiusOfHousing || Math.Abs(closestHouseY - y) > maxRadiusOfHousing))
