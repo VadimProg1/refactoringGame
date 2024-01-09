@@ -29,7 +29,7 @@ namespace LifeSimulation11
             }
 
             resolution = (int)numResolution.Value;
-            pictureBox1.Image = new Bitmap(1000 * resolution, 1000 * resolution);
+            pictureBox1.Image = new Bitmap(World.MAP_SIZE_X * resolution, World.MAP_SIZE_Y * resolution);
             numFood.Enabled = false;
             numMarios.Enabled = false;
 
@@ -106,7 +106,7 @@ namespace LifeSimulation11
             }
             int newRes = (int)numResolution.Value;
             resolution = newRes;
-            pictureBox1.Image = new Bitmap(1000 * newRes, 1000 * newRes);
+            pictureBox1.Image = new Bitmap(World.MAP_SIZE_X * newRes, World.MAP_SIZE_Y * newRes);
             gameGraphics.graphics = Graphics.FromImage(pictureBox1.Image);
             gameGraphics.resolution = newRes;
         }

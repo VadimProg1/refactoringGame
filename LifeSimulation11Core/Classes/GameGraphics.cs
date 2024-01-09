@@ -62,7 +62,7 @@ namespace LifeSimulation11
                     }
                     else if (nuke.state == "explosion")
                     {
-                        graphics.DrawImage(explosionImage, objects[i].x * resolution - 500, objects[i].y * resolution - 500, 1000, 1000);
+                        graphics.DrawImage(explosionImage, objects[i].x * resolution - 500, objects[i].y * resolution - 500, World.MAP_SIZE_X, World.MAP_SIZE_Y);
                     }
                 }
                 else if(objects[i] is House)

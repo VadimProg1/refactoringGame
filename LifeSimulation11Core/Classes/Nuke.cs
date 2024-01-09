@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LifeSimulation11
 {
@@ -14,8 +12,8 @@ namespace LifeSimulation11
         static public int eventPropability = 1200;
         public bool isLaunched = false;
         bool isChoosedDir = false;
-        int dirX = 1000;
-        int dirY = 1000;
+        int dirX = World.MAP_SIZE_X;
+        int dirY = World.MAP_SIZE_Y;
         public string state = "none";
         int explosionTime = 50;
         int speed = 6;

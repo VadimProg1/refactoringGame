@@ -48,8 +48,8 @@ namespace LifeSimulation11
             bool check = true;
             while (check)
             {
-                if ((objectsList[randIndex].x + razbrosX > 0 && objectsList[randIndex].x + razbrosX < 1000)
-                    && (objectsList[randIndex].y + razbrosY > 0 && objectsList[randIndex].y + razbrosY < 1000))
+                if ((objectsList[randIndex].x + razbrosX > 0 && objectsList[randIndex].x + razbrosX < World.MAP_SIZE_X)
+                    && (objectsList[randIndex].y + razbrosY > 0 && objectsList[randIndex].y + razbrosY < World.MAP_SIZE_Y))
                 {
                     if ((map[(objectsList[randIndex].x + razbrosX), (objectsList[randIndex].y + razbrosY)] is Creature)
                             || (map[(objectsList[randIndex].x + razbrosX), (objectsList[randIndex].y + razbrosY)] is Food))

@@ -313,8 +313,8 @@ namespace LifeSimulation11
             bool check = true;
             while (check)
             {
-                if ((x + razbrosX > 0 && x + razbrosX < 1000)
-                    && (y + razbrosY > 0 && y + razbrosY < 1000))
+                if ((x + razbrosX > 0 && x + razbrosX < World.MAP_SIZE_X)
+                    && (y + razbrosY > 0 && y + razbrosY < World.MAP_SIZE_Y))
                 {
                     if (map[(x + razbrosX), (y + razbrosY)] is Creature)
                     {

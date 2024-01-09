@@ -11,6 +11,8 @@ namespace LifeSimulation11
         int amountOfPopulation;
         int amountOfFood;
         private object[,] map;
+        public static int MAP_SIZE_X = 1000;
+        public static int MAP_SIZE_Y = 1000;
         private List<Cell> objectsList = new List<Cell>();
         Random random = new Random();
         Nuke nuke;
@@ -24,7 +26,7 @@ namespace LifeSimulation11
 
         void WorldGeneration()
         {
-            map = new object[1000, 1000];
+            map = new object[MAP_SIZE_X, MAP_SIZE_Y];
             for (int y = 0; y < map.GetLength(0); y++)
             {
                 for(int x = 0; x < map.GetLength(1); x++)
@@ -83,8 +85,8 @@ namespace LifeSimulation11
                 bool check = false;
                 while (!check)
                 {
-                    int randX = random.Next(1000);
-                    int randY = random.Next(1000);
+                    int randX = random.Next(MAP_SIZE_X);
+                    int randY = random.Next(MAP_SIZE_Y);
                     if (map[randX, randY] is Cell)
                     {
                         check = true;
@@ -227,8 +229,8 @@ namespace LifeSimulation11
                 bool check = false;
                 while (!check)
                 {
-                    int randX = random.Next(1000);
-                    int randY = random.Next(1000);
+                    int randX = random.Next(MAP_SIZE_X);
+                    int randY = random.Next(MAP_SIZE_Y);
                     if (map[randX, randY] is Cell)
                     {
                         check = true;
@@ -273,7 +275,7 @@ namespace LifeSimulation11
             {
                 for (int x1 = x - r; x1 < x + r; x1++)
                 {
-                    if(x1 >= 0 && x1 < 1000 && y1 >= 0 && y1 < 1000)
+                    if(x1 >= 0 && x1 < MAP_SIZE_X && y1 >= 0 && y1 < MAP_SIZE_Y)
                     {
                         if (map[x1, y1] is Creature)
                         {

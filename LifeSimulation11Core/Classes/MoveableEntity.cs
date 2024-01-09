@@ -12,7 +12,7 @@
         {
             int newPosX = x + shiftX;
             int newPosY = y + shiftY;
-            if (isBeyondBoundaries(newPosX, newPosY))
+            if (isBeyondMapBoundaries(newPosX, newPosY))
             {
                 return;
             }
@@ -32,13 +32,14 @@
         }
         public virtual void MoveTowardsFoodBehaviour(Food food) { }
 
-        private bool isBeyondBoundaries(int x, int y)
+        public static bool isBeyondMapBoundaries(int x, int y)
         {
-            if (x <= 0 || x >= 1000 || y <= 0 || y >= 1000)
+            if (x <= 0 || x >= World.MAP_SIZE_X || y <= 0 || y >= World.MAP_SIZE_Y)
             {
                 return true;
             }
             return false;
         }
+
     }
 }
