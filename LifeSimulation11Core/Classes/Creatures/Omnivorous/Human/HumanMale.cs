@@ -128,7 +128,7 @@ namespace LifeSimulation11
             housesList.Sort(new HouseComparer(x: x, y: y));
             foreach (House neighbour in housesList)
             {
-                bool check = true, checkRight = true, checkLeft = true, checkUp = true, checkDown = true;
+                bool checkRight = true, checkLeft = true, checkUp = true, checkDown = true;
                 int left = minRadiusOfHousing * -1, right = minRadiusOfHousing, up, down;
                 up = left;
                 down = right;
@@ -156,59 +156,55 @@ namespace LifeSimulation11
                         }
                         if (!checkLeft && !checkRight && !checkUp && !checkDown)
                         {
-                            check = false;
-                            break;
+                            return;
                         }
                     }
-                }
-                if (check)
-                {
-                    bool triedLeft = false, triedRight = false, triedUp = false, triedDown = false, quit = false;
-                    int randMove;
-                    while ((!triedDown || !triedUp || !triedLeft || !triedRight))
-                    {
-                        randMove = random.Next(4);
-                        switch (randMove)
-                        {
-                            case 0:
-                                triedLeft = true;
-                                if (checkLeft)
-                                {
-                                    futureHouseX = neighbour.x + left;
-                                    futureHouseY = neighbour.y;
-                                    quit = true;
-                                }
-                                break;
-                            case 1:
-                                triedRight = true;
-                                if (checkRight)
-                                {
-                                    futureHouseX = neighbour.x + right;
-                                    futureHouseY = neighbour.y;
-                                    quit = true;
-                                }
-                                break;
-                            case 2:
-                                triedDown = true;
-                                if (checkDown)
-                                {
-                                    futureHouseX = neighbour.x;
-                                    futureHouseY = neighbour.y + down;
-                                    quit = true;
-                                }
-                                break;
-                            case 3:
-                                triedUp = true;
-                                if (checkUp)
-                                {
-                                    futureHouseX = neighbour.x;
-                                    futureHouseY = neighbour.y + up;
-                                    quit = true;
-                                }
-                                break;
-                        }
-                    }
+                }         
 
+                bool triedLeft = false, triedRight = false, triedUp = false, triedDown = false, quit = false;
+                int randMove;
+                while ((!triedDown || !triedUp || !triedLeft || !triedRight))
+                {
+                    randMove = random.Next(4);
+                    switch (randMove)
+                    {
+                        case 0:
+                            triedLeft = true;
+                            if (checkLeft)
+                            {
+                                futureHouseX = neighbour.x + left;
+                                futureHouseY = neighbour.y;
+                                quit = true;
+                            }
+                            break;
+                        case 1:
+                            triedRight = true;
+                            if (checkRight)
+                            {
+                                futureHouseX = neighbour.x + right;
+                                futureHouseY = neighbour.y;
+                                quit = true;
+                            }
+                            break;
+                        case 2:
+                            triedDown = true;
+                            if (checkDown)
+                            {
+                                futureHouseX = neighbour.x;
+                                futureHouseY = neighbour.y + down;
+                                quit = true;
+                            }
+                            break;
+                        case 3:
+                            triedUp = true;
+                            if (checkUp)
+                            {
+                                futureHouseX = neighbour.x;
+                                futureHouseY = neighbour.y + up;
+                                quit = true;
+                            }
+                            break;
+                    }
                 }
             }
         }
