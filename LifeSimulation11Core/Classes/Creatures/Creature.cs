@@ -57,10 +57,6 @@ namespace LifeSimulation11
                 {
                     if (GetType() != objectsList[i].GetType())
                     {
-                        int distanceToObjX = Math.Abs(objectsList[i].x - x);
-                        int distanceToObjY = Math.Abs(objectsList[i].y - y);
-                        int distanceToNearestX = Math.Abs(nearestFoodX - x);
-                        int distanceToNearestY = Math.Abs(nearestFoodY - y);
                         if ((Math.Abs(objectsList[i].x - x) + Math.Abs(objectsList[i].y - y))
                     < (Math.Abs(nearestFoodX - x) + Math.Abs(nearestFoodY - y)))
                             {

@@ -160,7 +160,7 @@ namespace LifeSimulation11
 
         private void DeterminateFutureHouseCoordinatesWithRandomDirections(bool checkLeft, bool checkRight, bool checkDown, bool checkUp, int right, int left, int up, int down, House neighbour)
         {
-            bool triedLeft = false, triedRight = false, triedUp = false, triedDown = false, quit = false;
+            bool triedLeft = false, triedRight = false, triedUp = false, triedDown = false;
             int randMove;
             while ((!triedDown || !triedUp || !triedLeft || !triedRight))
             {
@@ -173,7 +173,6 @@ namespace LifeSimulation11
                         {
                             futureHouseX = neighbour.x + left;
                             futureHouseY = neighbour.y;
-                            quit = true;
                         }
                         break;
                     case 1:
@@ -182,7 +181,6 @@ namespace LifeSimulation11
                         {
                             futureHouseX = neighbour.x + right;
                             futureHouseY = neighbour.y;
-                            quit = true;
                         }
                         break;
                     case 2:
@@ -191,7 +189,6 @@ namespace LifeSimulation11
                         {
                             futureHouseX = neighbour.x;
                             futureHouseY = neighbour.y + down;
-                            quit = true;
                         }
                         break;
                     case 3:
@@ -200,7 +197,6 @@ namespace LifeSimulation11
                         {
                             futureHouseX = neighbour.x;
                             futureHouseY = neighbour.y + up;
-                            quit = true;
                         }
                         break;
                 }
