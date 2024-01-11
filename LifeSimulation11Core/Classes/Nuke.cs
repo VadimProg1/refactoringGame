@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace LifeSimulation11
@@ -14,7 +15,7 @@ namespace LifeSimulation11
         bool isChoosedDir = false;
         int dirX = World.MAP_SIZE_X;
         int dirY = World.MAP_SIZE_Y;
-        public NukeStates state = NukeStates.none;
+        private NukeStates state = NukeStates.none;
         int explosionTime = 50;
         int speed = 6;
         public Nuke(int x, int y, Random randomm, List<Cell> objectsListt, object[,] mapp) : base(x, y, mapp)
@@ -157,6 +158,19 @@ namespace LifeSimulation11
             {
                 MoveByShift(0, speed);
             }
+        }
+
+        public Image GetImage()
+        {
+            if (state.Equals(NukeStates.flying))
+            {
+                return Image.FromFile("D:/Source/Repos/OOP-LifeSimulation/LifeSimulation11/nuclearbomb.png");
+            }
+            else if (state.Equals((int)NukeStates.explosion))
+            {
+                return Image.FromFile("D:/Source/Repos/OOP-LifeSimulation/LifeSimulation11/nuclear.png");
+            }
+            return null;
         }
 
         public enum NukeStates

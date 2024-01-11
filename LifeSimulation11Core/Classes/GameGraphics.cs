@@ -8,6 +8,7 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace LifeSimulation11
 {
@@ -15,9 +16,6 @@ namespace LifeSimulation11
     {
         public Graphics graphics;
         public int resolution;
-        Image explosionImage = Image.FromFile("D:/Source/Repos/OOP-LifeSimulation/LifeSimulation11/nuclear.png");
-        Image bombImage = Image.FromFile("D:/Source/Repos/OOP-LifeSimulation/LifeSimulation11/nuclearbomb.png");
-        Image houseImage = Image.FromFile("D:/Source/Repos/OOP-LifeSimulation/LifeSimulation11/house-0.png");
         public GameGraphics(Graphics graphics, int resolution)
         {
             this.graphics = graphics;
@@ -41,18 +39,21 @@ namespace LifeSimulation11
                 else if (objectsToDraw[i] is Nuke)
                 {
                     Nuke nuke = (Nuke)objectsToDraw[i];
-                    if (nuke.state == Nuke.NukeStates.flying)
+                    Image image = nuke.GetImage();
+                    if (image != null)
                     {
-                        graphics.DrawImage(bombImage, objectsToDraw[i].x * resolution, objectsToDraw[i].y * resolution, 100, 100);
+                        graphics.DrawImage(image, objectsToDraw[i].x * resolution - (image.Size.Width / 2), objectsToDraw[i].y * resolution - (image.Size.Height / 2), image.Size.Width, image.Size.Height);
                     }
-                    else if (nuke.state == Nuke.NukeStates.explosion)
-                    {
-                        graphics.DrawImage(explosionImage, objectsToDraw[i].x * resolution - 500, objectsToDraw[i].y * resolution - 500, World.MAP_SIZE_X, World.MAP_SIZE_Y);
-                    }
+                    
                 }
-                else if(objectsToDraw[i] is House)
+                else if (objectsToDraw[i] is House)
                 {
-                    graphics.DrawImage(houseImage, objectsToDraw[i].x * resolution - 10, objectsToDraw[i].y * resolution - 10, 20, 20);
+                    House house = (House)objectsToDraw[i];
+                    Image image = house.GetImage();
+                    if (image != null)
+                    {
+                        graphics.DrawImage(image, objectsToDraw[i].x * resolution - (image.Size.Width / 2), objectsToDraw[i].y * resolution - (image.Size.Height / 2), image.Size.Width, image.Size.Height);
+                    }
                 }
             }
         }

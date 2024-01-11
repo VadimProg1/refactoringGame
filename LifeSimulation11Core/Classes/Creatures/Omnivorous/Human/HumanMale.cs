@@ -220,7 +220,7 @@ namespace LifeSimulation11
 
         public void BuildHouse()
         {
-            House newHouse = new House(x: x, y: y, randomm: random);
+            House newHouse = new House(x: x, y: y);
             objectsList.Add(newHouse);
             house = newHouse;
         }

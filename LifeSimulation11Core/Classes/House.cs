@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static LifeSimulation11.Nuke;
+using static System.Windows.Forms.AxHost;
 
 namespace LifeSimulation11
 {
@@ -19,6 +21,9 @@ namespace LifeSimulation11
                 foodSupply++;
             }
         }
-
+        public Image GetImage()
+        {
+            return Image.FromFile("D:/Source/Repos/OOP-LifeSimulation/LifeSimulation11/house-0.png");
+        }
     }
 }
