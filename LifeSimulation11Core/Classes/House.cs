@@ -11,11 +11,7 @@ namespace LifeSimulation11
     {
         public int foodSupply = 0;
         private int maxFoodSupply = 10;
-        public static Random random;
-        public House(int x, int y, Random randomm) : base(x, y)
-        {
-            random = randomm;
-        }
+        public House(int x, int y) : base(x, y) { }
         public void IncrementFoodSupply()
         {
             if(foodSupply < maxFoodSupply)
