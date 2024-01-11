@@ -25,7 +25,7 @@ namespace LifeSimulation11
             CheckMyLove<Rat<HFood, PFood, FFood>>();
         }
 
-        public override Brush GetCreatureColor()
+        public override Brush GetColor()
         {
             return Brushes.LightGray;
         }

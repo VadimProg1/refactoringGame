@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LifeSimulation11Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LifeSimulation11
 {
-    public abstract class Food : Cell
+    public abstract class Food : Cell, IColorSprite
     {
         public static Random random;
         public static List<Cell> objectsList;
@@ -18,8 +19,6 @@ namespace LifeSimulation11
             objectsList = objectsListt;
             map = mapp;
         }
-
-        public abstract Brush GetFoodColor();
 
         public virtual void Death()
         {
@@ -76,6 +75,17 @@ namespace LifeSimulation11
             }
         }
 
+        public abstract Brush GetColor();
+
+        public int GetSpritePosX()
+        {
+            return x;
+        }
+
+        public int GetSpritePosY()
+        {
+            return y;
+        }
 
     }
 }

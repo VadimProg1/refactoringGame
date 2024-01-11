@@ -24,7 +24,7 @@ namespace LifeSimulation11
                                 );
         }
 
-        public override Brush GetFoodColor()
+        public override Brush GetColor()
         {
             return Brushes.LightGreen;
         }

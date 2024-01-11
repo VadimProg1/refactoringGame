@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LifeSimulation11Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LifeSimulation11
 {
-    public abstract class Creature : MoveableEntity
+    public abstract class Creature : MoveableEntity, IColorSprite
     {
         public int maxSatiety = 200;
         public int satiety = 200;
@@ -269,7 +270,17 @@ namespace LifeSimulation11
 
         public abstract void Activate();
 
-        public abstract Brush GetCreatureColor();
+        public abstract Brush GetColor();
+
+        public int GetSpritePosX()
+        {
+            return x;
+        }
+
+        public int GetSpritePosY()
+        {
+            return y;
+        }
 
         public virtual void CheckMyLove<TLove>()
             where TLove : Creature

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using LifeSimulation11Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
 namespace LifeSimulation11
 {
-    public class Nuke : MoveableEntity
+    public class Nuke : MoveableEntity, IImageSprite
     {
         public static Random random;
         public static object[,] map;
@@ -171,6 +172,16 @@ namespace LifeSimulation11
                 return Image.FromFile("D:/Source/Repos/OOP-LifeSimulation/LifeSimulation11/nuclear.png");
             }
             return null;
+        }
+
+        public int GetSpritePosX()
+        {
+            return x;
+        }
+
+        public int GetSpritePosY()
+        {
+            return y;
         }
 
         public enum NukeStates

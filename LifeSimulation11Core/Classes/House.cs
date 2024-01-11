@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LifeSimulation11Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,7 +10,7 @@ using static System.Windows.Forms.AxHost;
 
 namespace LifeSimulation11
 {
-    class House : Cell
+    class House : Cell, IImageSprite
     {
         public int foodSupply = 0;
         private int maxFoodSupply = 10;
@@ -24,6 +25,16 @@ namespace LifeSimulation11
         public Image GetImage()
         {
             return Image.FromFile("D:/Source/Repos/OOP-LifeSimulation/LifeSimulation11/house-0.png");
+        }
+
+        public int GetSpritePosX()
+        {
+            return x;
+        }
+
+        public int GetSpritePosY()
+        {
+            return y;
         }
     }
 }

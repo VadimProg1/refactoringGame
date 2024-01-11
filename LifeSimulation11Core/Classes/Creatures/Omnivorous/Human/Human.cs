@@ -86,7 +86,7 @@ namespace LifeSimulation11
             CheckMyLove<Human<HFood, PFood, FFood>>();
         }
 
-        public override Brush GetCreatureColor()
+        public override Brush GetColor()
         {
             return Brushes.Black;
         }

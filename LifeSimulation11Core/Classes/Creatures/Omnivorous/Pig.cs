@@ -26,7 +26,7 @@ namespace LifeSimulation11
         }
 
 
-        public override Brush GetCreatureColor()
+        public override Brush GetColor()
         {
             return Brushes.Pink;
         }

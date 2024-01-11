@@ -25,7 +25,7 @@ namespace LifeSimulation11
             CheckMyLove<Lion<TFood, UFood>>();
         }
 
-        public override Brush GetCreatureColor()
+        public override Brush GetColor()
         {
             return Brushes.Red;
         }
