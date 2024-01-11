@@ -11,12 +11,10 @@ namespace LifeSimulation11
     {
         public int foodSupply = 0;
         private int maxFoodSupply = 10;
-        Image houseImage;
         public static Random random;
         public House(int x, int y, Random randomm) : base(x, y)
         {
             random = randomm;
-            houseImage = GenerateRandomImage();
         }
         public void IncrementFoodSupply()
         {
@@ -26,20 +24,5 @@ namespace LifeSimulation11
             }
         }
 
-        public Image GenerateRandomImage()
-        {
-            int rand = random.Next(0, 1);
-
-            switch (rand)
-            {
-                case 0:
-                    houseImage = Image.FromFile("D:/Source/Repos/OOP-LifeSimulation/LifeSimulation11/house-0.png");
-                    break;
-                case 1:
-                    houseImage = Image.FromFile("D:/Source/Repos/OOP-LifeSimulation/LifeSimulation11/house-0.png");
-                    break;
-            }
-            return houseImage;
-        }
     }
 }
