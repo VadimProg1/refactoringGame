@@ -42,21 +42,16 @@ namespace LifeSimulation11
             gameGraphics = new GameGraphics
             (
                 graphics: Graphics.FromImage(pictureBox1.Image),
-                world: world,
                 resolution: resolution
             );            
             timer1.Start();
         }
 
-        private void RefreshGraphics()
-        {
-            gameGraphics.Refresh();
-            pictureBox1.Refresh();
-        }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
-            RefreshGraphics();
+            world.UpdateWorld();
+            gameGraphics.DrawGameObjects(world.GetObjects());
+            pictureBox1.Refresh();
         }
 
         private void buttonStart_Click(object sender, EventArgs e)
